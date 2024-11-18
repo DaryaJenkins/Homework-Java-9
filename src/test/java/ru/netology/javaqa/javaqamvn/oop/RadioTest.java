@@ -1,32 +1,31 @@
 package ru.netology.javaqa.javaqamvn.oop;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 public class RadioTest {
     Radio radio = new Radio();
 
-    @Test
-    public void switchToNextStation() {
-        radio.setCurrentStation(9);
+    @ParameterizedTest
+    @CsvSource({
+            "0,1", "1,2", "8,9", "9,0"
+    })
+    public void switchToNextStation(int initialStation, int expected) {
+        radio.setCurrentStation(initialStation);
         radio.nextStation();
-
-        int expected = 0;
         int actual = radio.getCurrentStation();
-
         Assertions.assertEquals(expected, actual);
     }
 
-    @Test
-    public void switchToPreviousStation() {
-        radio.setCurrentStation(0);
+    @ParameterizedTest
+    @CsvSource({
+            "0,9", "1,0", "8,7", "9,8"
+    })
+    public void switchToPreviousStation(int initialStation, int expected) {
+        radio.setCurrentStation(initialStation);
         radio.prevStation();
-
-        int expected = 9;
         int actual = radio.getCurrentStation();
-
         Assertions.assertEquals(expected, actual);
     }
 
@@ -34,8 +33,31 @@ public class RadioTest {
     @CsvSource({
             "0,0", "1,1", "8,8", "9,9", "10,0"
     })
-    public void testBoundariesStations(int setCurrentStation, int expected) {
+    public void testBoundariesStations(int setStation, int expected) {
+        radio.setCurrentStation(setStation);
         int actual = radio.getCurrentStation();
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "0,1", "1,2", "99,100", "100,100"
+    })
+    public void testIncreaseVolume(int initialVolume, int expected) {
+        radio.setCurrentVolume(initialVolume);
+        radio.increaseVolume();
+        int actual = radio.getCurrentVolume();
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "0,0", "1,0", "99,98", "100,99"
+    })
+    public void testDecreaseVolume(int initialVolume, int expected) {
+        radio.setCurrentVolume(initialVolume);
+        radio.decreaseVolume();
+        int actual = radio.getCurrentVolume();
         Assertions.assertEquals(expected, actual);
     }
 }

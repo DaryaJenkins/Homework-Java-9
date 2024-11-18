@@ -24,9 +24,6 @@ public class Radio {
         if (newCurrentStation > maxStation) {
             return;
         }
-        if (newCurrentStation < minStation) {
-            return;
-        }
         currentStation = newCurrentStation;
     }
 
@@ -42,13 +39,13 @@ public class Radio {
         }
     }
 
-    public void setCurrentVolume(int newCurrentVolume) {
-        if (currentVolume > maxVolume) {
-            return;
+    public int getCurrentVolume() {
+        return currentVolume;
+    }
+
+    public void setCurrentVolume(int initialVolume) {
+        for (int i = 0; i < initialVolume; i++) {
+            increaseVolume();
         }
-        if (currentVolume < minVolume) {
-            return;
-        }
-        currentVolume = newCurrentVolume;
     }
 }
