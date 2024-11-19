@@ -24,6 +24,9 @@ public class Radio {
         if (newCurrentStation > maxStation) {
             return;
         }
+        if (newCurrentStation < minStation) {
+            return;
+        }
         currentStation = newCurrentStation;
     }
 

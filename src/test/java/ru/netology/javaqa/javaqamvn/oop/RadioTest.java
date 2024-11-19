@@ -31,7 +31,7 @@ public class RadioTest {
 
     @ParameterizedTest
     @CsvSource({
-            "0,0", "1,1", "8,8", "9,9", "10,0"
+            "-1,0", "0,0", "1,1", "8,8", "9,9", "10,0"
     })
     public void testBoundariesStations(int setStation, int expected) {
         radio.setCurrentStation(setStation);
