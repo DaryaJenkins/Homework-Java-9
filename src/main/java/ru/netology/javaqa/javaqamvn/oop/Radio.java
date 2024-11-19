@@ -1,12 +1,23 @@
 package ru.netology.javaqa.javaqamvn.oop;
 
 public class Radio {
-    private int currentVolume;
-    private int currentStation;
-    private int maxStation = 9;
+    private int maxStation;
     private int minStation = 0;
+    private int currentStation = minStation;
     private int maxVolume = 100;
     private int minVolume = 0;
+    private int currentVolume;
+
+    public Radio (int size) {
+        if (size < 1) {
+            size = 1;
+        }
+        maxStation = size - 1;
+    }
+
+    public Radio () {
+        this(10);
+    }
 
     public int getCurrentStation() {
         return currentStation;
