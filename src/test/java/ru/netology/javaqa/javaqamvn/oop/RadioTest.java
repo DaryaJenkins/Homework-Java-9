@@ -5,38 +5,79 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 public class RadioTest {
-    Radio radio = new Radio();
 
     @ParameterizedTest
     @CsvSource({
             "0,1", "1,2", "8,9", "9,0"
     })
-    public void switchToNextStation(int initialStation, int expected) {
+    public void switchToNextStationDefault(int initialStation, int expected) {
+        Radio radio = new Radio();
         radio.setCurrentStation(initialStation);
         radio.nextStation();
-        int actual = radio.getCurrentStation();
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, radio.getCurrentStation());
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "0,1", "1,2", "2,0"
+    })
+    public void switchToNextStationCustom(int initialStation, int expected) {
+        Radio radio = new Radio(3);
+        radio.setCurrentStation(initialStation);
+        radio.nextStation();
+        Assertions.assertEquals(expected, radio.getCurrentStation());
     }
 
     @ParameterizedTest
     @CsvSource({
             "0,9", "1,0", "8,7", "9,8"
     })
-    public void switchToPreviousStation(int initialStation, int expected) {
+    public void switchToPreviousStationDefault(int initialStation, int expected) {
+        Radio radio = new Radio();
         radio.setCurrentStation(initialStation);
         radio.prevStation();
-        int actual = radio.getCurrentStation();
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, radio.getCurrentStation());
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "10,9", "9,8", "1,0", "0,10"
+    })
+    public void switchToPreviousStationCustom(int initialStation, int expected) {
+        Radio radio = new Radio(11);
+        radio.setCurrentStation(initialStation);
+        radio.prevStation();
+        Assertions.assertEquals(expected, radio.getCurrentStation());
     }
 
     @ParameterizedTest
     @CsvSource({
             "-1,0", "0,0", "1,1", "8,8", "9,9", "10,0"
     })
-    public void testBoundariesStations(int setStation, int expected) {
+    public void testBoundariesDefault(int setStation, int expected) {
+        Radio radio = new Radio();
         radio.setCurrentStation(setStation);
-        int actual = radio.getCurrentStation();
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, radio.getCurrentStation());
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "-1,0", "0,0", "1,1", "6,6", "7,0"
+    })
+    public void testBoundariesCustom(int setStation, int expected) {
+        Radio radio = new Radio(7);
+        radio.setCurrentStation(setStation);
+        Assertions.assertEquals(expected, radio.getCurrentStation());
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "-1,0", "0,0", "1,0"
+    })
+    public void testIfSizeIsZero(int setStation, int expected) {
+        Radio radio = new Radio(0);
+        radio.setCurrentStation(setStation);
+        Assertions.assertEquals(expected, radio.getCurrentStation());
     }
 
     @ParameterizedTest
@@ -44,10 +85,10 @@ public class RadioTest {
             "0,1", "1,2", "99,100", "100,100"
     })
     public void testIncreaseVolume(int initialVolume, int expected) {
+        Radio radio = new Radio();
         radio.setCurrentVolume(initialVolume);
         radio.increaseVolume();
-        int actual = radio.getCurrentVolume();
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, radio.getCurrentVolume());
     }
 
     @ParameterizedTest
@@ -55,9 +96,9 @@ public class RadioTest {
             "0,0", "1,0", "99,98", "100,99"
     })
     public void testDecreaseVolume(int initialVolume, int expected) {
+        Radio radio = new Radio();
         radio.setCurrentVolume(initialVolume);
         radio.decreaseVolume();
-        int actual = radio.getCurrentVolume();
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, radio.getCurrentVolume());
     }
 }
